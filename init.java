@@ -14,8 +14,10 @@ public class init extends JFrame implements ActionListener, KeyListener {
 
     JButton boutonOk;
     JButton boutonAnnuler;
+    JButton boutonPacman;
     List listeTaille;
     Maze maze;
+    Pacman pac;
     JPanel launcher;
     JPanel mainContainer;
     JPanel fin;
@@ -28,7 +30,7 @@ public class init extends JFrame implements ActionListener, KeyListener {
     public init() {
         // Initialisation de la fenêtre
         setSize(500,500);
-        setTitle("Maze");
+        setTitle("Maze & Pacman");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Initialisation des composants
@@ -36,6 +38,8 @@ public class init extends JFrame implements ActionListener, KeyListener {
         boutonOk.addActionListener(this);
         boutonAnnuler = new JButton("Annuler");
         boutonAnnuler.addActionListener(this);
+        boutonPacman = new JButton("Pacman");
+        boutonPacman.addActionListener(this);
         listeTaille = new List(10, false);
         for(int i = 10; i <= 100; i+=10) {
             listeTaille.add(i + "");
@@ -43,6 +47,7 @@ public class init extends JFrame implements ActionListener, KeyListener {
 
         // Initialisation des panneaux et des organisation (layouts)
         launcher = new JPanel();
+        launcher.add(boutonPacman);
         launcher.add(listeTaille);
         launcher.add(boutonAnnuler);
         launcher.add(boutonOk);
@@ -51,8 +56,8 @@ public class init extends JFrame implements ActionListener, KeyListener {
         cl = new CardLayout();
         mainContainer.setLayout(cl);
         setContentPane(mainContainer);
-        cl.first(mainContainer);
         mainContainer.add("Launcher", launcher);
+        cl.first(mainContainer);
         JButton ok = new JButton("Continuer");
         setVisible(true);
     }
@@ -93,6 +98,13 @@ public class init extends JFrame implements ActionListener, KeyListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if(e.getActionCommand().equals("Pacman")) {
+            // Vous codez dans cette condition :
+            pac = new Pacman();
+            mainContainer.add("Pacman", pac);
+            cl.next(mainContainer);
+        }
+
         if(e.getActionCommand().equals("OK")) {
             try {
                 maze = new Maze(this, Integer.parseInt(listeTaille.getSelectedItem()));
