@@ -101,6 +101,8 @@ public class init extends JFrame implements ActionListener, KeyListener {
         if(e.getActionCommand().equals("Pacman")) {
             // Vous codez dans cette condition :
             pac = new Pacman();
+            pac.addKeyListener(this);
+            pac.setParent(this);
             mainContainer.add("Pacman", pac);
             cl.next(mainContainer);
         }
@@ -131,21 +133,39 @@ public class init extends JFrame implements ActionListener, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if(e.getKeyCode() == KeyEvent.VK_UP) {
-            maze.move(Maze.NORD);
+        if(pac != null) {
+            if(e.getKeyCode() == KeyEvent.VK_UP) {
+                pac.move(Pacman.NORD);
+            }
+            else if(e.getKeyCode() == KeyEvent.VK_DOWN) {
+                pac.move(Pacman.SUD);
+            }
+            else if(e.getKeyCode() == KeyEvent.VK_LEFT) {
+                pac.move(Pacman.OUEST);
+            }
+            else if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                pac.move(Pacman.EST);
+            }
         }
-        else if(e.getKeyCode() == KeyEvent.VK_DOWN) {
-            maze.move(Maze.SUD);
+
+        else if(maze != null) {
+            if(e.getKeyCode() == KeyEvent.VK_UP) {
+                maze.move(Maze.NORD);
+            }
+            else if(e.getKeyCode() == KeyEvent.VK_DOWN) {
+                maze.move(Maze.SUD);
+            }
+            else if(e.getKeyCode() == KeyEvent.VK_LEFT) {
+                maze.move(Maze.OUEST);
+            }
+            else if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                maze.move(Maze.EST);
+            }
+            else if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+                maze.generationPathRobot();
+            }
         }
-        else if(e.getKeyCode() == KeyEvent.VK_LEFT) {
-            maze.move(Maze.OUEST);
-        }
-        else if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            maze.move(Maze.EST);
-        }
-        else if(e.getKeyCode() == KeyEvent.VK_SPACE) {
-            maze.generationPathRobot();
-        }
+
         else if(e.getKeyChar() == 'q') {
             System.exit(0);
         }
